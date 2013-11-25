@@ -9,7 +9,6 @@ module BikeContainer
     @capacity = value
   end
 
-
   def bikes
     @bikes ||= []
   end
