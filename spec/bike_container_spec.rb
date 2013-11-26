@@ -59,5 +59,8 @@ describe BikeContainer do
   it "should handle string and not exiting object" do
     expect(holder.dock()).to be_false
   end
+  it "should handle string and not exiting object" do
+    expect(holder.empty?).to be_true
+  end
 
 end

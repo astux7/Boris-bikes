@@ -43,4 +43,8 @@ module BikeContainer
     dock(bike)
   end
 
+  def empty?
+    return true if bike_count == 0
+  end
+
 end
