@@ -6,4 +6,9 @@ class Van
   	self.capacity = options.fetch(:capacity, capacity)
   end
 
+  def load_broken_bikes(station)
+    station.broken_bikes
+  end
+
+  
 end
