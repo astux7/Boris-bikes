@@ -7,7 +7,10 @@ class Van
   end
 
   def load_broken_bikes(station)
-    station.broken_bikes
+    station.broken_bikes.each do |bike|
+      dock(bike)
+      station.release(bike)
+    end
   end
 
   

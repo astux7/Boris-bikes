@@ -19,14 +19,11 @@ module BikeContainer
  
   def dock(bike = nil)
     return false if bike == nil
-    return false if bikes.find{|bike_in| bike_in.object_id == bike.object_id} != nil
     raise "There is no more room for bikes" if full?
     bikes << bike
   end 
 
   def release(bike = nil)
-    return false if bike == nil 
-    return false if bikes.find{|bike_in| bike_in.object_id == bike.object_id} == nil
     bikes.delete(bike)
   end
 
@@ -39,8 +36,7 @@ module BikeContainer
   end
 
   def broken_bikes
-    bikes.reject{ |bike| !bike.broken?}
-
+    bikes.select{ |bike| bike.broken?}
   end
 
   def accept(bike)
@@ -49,7 +45,7 @@ module BikeContainer
   end
 
   def empty?
-    return true if bike_count == 0
+    bike_count == 0
   end
 
 end

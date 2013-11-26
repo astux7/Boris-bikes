@@ -19,7 +19,9 @@ describe Van do
     station.dock(working_bike)
     bikes << broken_bike 
     #bikes << working_bike
-    expect(van.load_broken_bikes(station)).to eq(bikes)
+    van.load_broken_bikes(station)
+    expect(van.bikes).to eq(bikes)
+    expect(station.bikes.include? broken_bike).to be_false
   end
 
 

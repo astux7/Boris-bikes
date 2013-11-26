@@ -54,7 +54,7 @@ describe BikeContainer do
   end
 
   it "should handle string passing" do
-    expect(holder.release("testing")).to be_false
+    expect(holder.release(Object.new)).to be_false
   end
   it "should handle string and not exiting object" do
     expect(holder.dock()).to be_false
