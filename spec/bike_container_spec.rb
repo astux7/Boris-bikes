@@ -1,9 +1,11 @@
 require_relative '../lib/bike_container'
+require_relative '../lib/person'
 class ContainerHolder; include BikeContainer; end
 
 describe BikeContainer do
   let(:bike) {Bike.new}
   let(:holder){ContainerHolder.new}
+  let(:person){Person.new}
 
   it "should accept a bike" do
     expect { holder.dock(bike) }.to change {holder.bike_count}.from(0).to(1)
@@ -35,5 +37,27 @@ describe BikeContainer do
     holder.accept(broken_bike)
     expect(broken_bike.broken?).to be_false
   end 
+
+  it "should release a bike" do
+    holder.dock(bike)
+    holder.release(bike)
+    expect(holder.bike_count).to eq(0)
+  end
+  
+  it "should handle error of empty arg passing" do
+    expect(holder.release()).to be_false
+  end
+  it "should handle and recognize not exist object" do
+    first_bike, second_bike = Bike.new, Bike.new
+    holder.dock(second_bike)
+    expect(holder.release(first_bike)).to be_false
+  end
+
+  it "should handle string passing" do
+    expect(holder.release("testing")).to be_false
+  end
+  it "should handle string and not exiting object" do
+    expect(holder.dock()).to be_false
+  end
 
 end

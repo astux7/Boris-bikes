@@ -17,12 +17,16 @@ module BikeContainer
     bikes.count
   end
  
-  def dock(bike)
+  def dock(bike = nil)
+    return false if bike == nil
+    return false if bikes.find{|bike_in| bike_in.object_id == bike.object_id} != nil
     raise "There is no more room for bikes" if full?
     bikes << bike
   end 
 
-  def release(bike)
+  def release(bike = nil)
+    return false if bike == nil 
+    return false if bikes.find{|bike_in| bike_in.object_id == bike.object_id} == nil
     bikes.delete(bike)
   end
 
