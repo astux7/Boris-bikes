@@ -6,7 +6,7 @@ module BikeContainer
   end
 
   def capacity=(value)    
-    @capacity = value
+      @capacity = value.to_i > 0 ? value : DEFAULT_CAPACITY
   end
 
   def bikes

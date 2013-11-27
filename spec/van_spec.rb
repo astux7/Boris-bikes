@@ -111,4 +111,9 @@ describe Van do
     expect(station.bike_count).to eq(2)
   end
 
+  it "should manage negative and bad type of capacity" do
+    vann = Van.new({:capacity => -55})
+    expect(vann.capacity).to eq(10)
+  end
+
 end
