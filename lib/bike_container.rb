@@ -12,7 +12,7 @@ module BikeContainer
   def bikes
     @bikes ||= []
   end
-
+#used to count capacity
   def bike_count
     bikes.count
   end
