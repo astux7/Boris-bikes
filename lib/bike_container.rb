@@ -23,9 +23,16 @@ module BikeContainer
     bikes << bike
   end 
 
-  def release(bike = nil)
-    bikes.delete(bike)
+  def dock_all(bikes = nil)
+    bikes.dup.each do |bike|
+      dock(bike)
+    end
   end
+
+  def release(bike = nil)
+    bikes.delete(bike) if bike != nil
+    bikes.delete(bikes.last) if bike == nil
+  end 
 
   def full?
     bike_count == capacity
@@ -39,10 +46,27 @@ module BikeContainer
     bikes.select{ |bike| bike.broken?}
   end
 
-  def accept(bike)
-    bike.fix
-    dock(bike)
+ #def accept(bike)
+    #bike.fix
+  #  dock(bike)
+  #end
+  
+  def accept_to(location,bike)
+    location.dock(bike)
+    release
   end
+
+  def moving_from(location,bike)
+    dock(bike)
+    location.release(bike)
+  end
+  
+  #def accept(bike)
+  # bike.fix
+  # return false if bike == nil
+  # raise "There is no more room for bikes" if full?
+  # bikes << bike
+  #end
 
   def empty?
     bike_count == 0

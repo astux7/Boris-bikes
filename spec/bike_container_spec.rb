@@ -1,11 +1,10 @@
 require_relative '../lib/bike_container'
-require_relative '../lib/person'
 class ContainerHolder; include BikeContainer; end
 
 describe BikeContainer do
-  let(:bike) {Bike.new}
+  #let(:bike) {Bike.new}
+  let(:bike){double(:bike,:"broken?"=>true,:fix=>"")}
   let(:holder){ContainerHolder.new}
-  let(:person){Person.new}
 
   it "should accept a bike" do
     expect { holder.dock(bike) }.to change {holder.bike_count}.from(0).to(1)
@@ -34,13 +33,12 @@ describe BikeContainer do
     broken_bike = Bike.new
     broken_bike.break
     holder.dock(broken_bike)
-    holder.accept(broken_bike)
-    expect(broken_bike.broken?).to be_false
+    expect(broken_bike.broken?).to be_true
   end 
 
   it "should release a bike" do
     holder.dock(bike)
-    holder.release(bike)
+    holder.release
     expect(holder.bike_count).to eq(0)
   end
   

@@ -15,19 +15,11 @@ describe Van do
 
   it "should care about capacity " do
     working_bike, broken_bike , bike1 , bike2 = Bike.new, Bike.new, Bike.new, Bike.new
-    bikes = []
-    broken_bike.break
-    working_bike.break
-    bike2.break
-    bike1.break
-    station.dock(broken_bike)
-    station.dock(working_bike)
-    station.dock(bike1)
-    station.dock(bike2)
-    bikes << broken_bike 
-    bikes << working_bike
-    bikes << bike2
-    bikes << bike1
+    bikes = [ broken_bike, working_bike, bike2, bike1 ]
+    bikes.each {|bike|
+      bike.break
+    }
+    station.dock_all(bikes)
     van.load_broken_bikes_from(station)
     van.bikes.count.should be >= (van.capacity)
     #need to see how is greater then
@@ -35,18 +27,12 @@ describe Van do
 
   it "should take broken bikes in the station (left some if full)" do
   	working_bike, broken_bike , extra_bike = Bike.new, Bike.new, Bike.new
-  	bikes = []
-    broken_bike.break
-    working_bike.break
-    extra_bike.break
-    station.dock(broken_bike)
-    station.dock(working_bike)
-    station.dock(extra_bike)
-    bikes << broken_bike 
-    bikes << working_bike
-    bikes << extra_bike
+    bikes = [ broken_bike, working_bike, extra_bike]
+    bikes.each {|bike|
+      bike.break
+    }
+    station.dock_all(bikes)
     van.load_broken_bikes_from(station)
-    #expect(van.bikes).to eq(bikes)
     expect(station.bikes.include? broken_bike).to be_false
     #cause van is full it left some of them in station too
     expect(station.broken_bikes.include? extra_bike).to be_true
@@ -55,16 +41,12 @@ describe Van do
 
   it "should delivery bikes to garage" do
     working_bike, broken_bike , extra_bike = Bike.new, Bike.new, Bike.new
-    bikes = []
-    broken_bike.break
-    working_bike.break
-    extra_bike.break
-    station.dock(broken_bike)
-    station.dock(working_bike)
-  #  station.dock(extra_bike)
-    bikes << broken_bike 
-    bikes << working_bike
-    #bikes << extra_bike
+    bikes = [ broken_bike, working_bike, extra_bike]
+    bikes.each {|bike|
+      bike.break
+    }
+    station.dock_all(bikes)
+    station.release
     van.load_broken_bikes_from(station)
     van.move_broken_bikes_to_fix(garage)
     expect(van.bike_count).to eq(0)
@@ -74,16 +56,12 @@ describe Van do
 
   it "should fixed bikes to load from garage" do
     working_bike, broken_bike , extra_bike = Bike.new, Bike.new, Bike.new
-    bikes = []
-    broken_bike.break
-    working_bike.break
-    extra_bike.break
-    station.dock(broken_bike)
-    station.dock(working_bike)
-  #  station.dock(extra_bike)
-    bikes << broken_bike 
-    bikes << working_bike
-    #bikes << extra_bike
+    bikes = [ broken_bike, working_bike, extra_bike]
+    bikes.each {|bike|
+      bike.break
+    }
+    station.dock_all(bikes)
+    station.release
     van.load_broken_bikes_from(station)
     van.move_broken_bikes_to_fix(garage)
     van.load_fixed_bikes_from(garage)
@@ -93,16 +71,12 @@ describe Van do
 
   it "should fixed bikes to return to station" do
     working_bike, broken_bike , extra_bike = Bike.new, Bike.new, Bike.new
-    bikes = []
-    broken_bike.break
-    working_bike.break
-    extra_bike.break
-    station.dock(broken_bike)
-    station.dock(working_bike)
-  #  station.dock(extra_bike)
-    bikes << broken_bike 
-    bikes << working_bike
-    #bikes << extra_bike
+    bikes = [ broken_bike, working_bike, extra_bike]
+    bikes.each {|bike|
+      bike.break
+    }
+    station.dock_all(bikes)
+    station.release
     van.load_broken_bikes_from(station)
     van.move_broken_bikes_to_fix(garage)
     van.load_fixed_bikes_from(garage)
